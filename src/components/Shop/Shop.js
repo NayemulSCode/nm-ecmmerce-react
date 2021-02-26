@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import './Shop.css';
 import fakeData from '../../fakeData';
 import Product from '../Product/Product';
+import Cart from '../../Cart';
+
+
 export default function Shop() {
     //console.log(fakeData);
     const first10 = fakeData.slice(0,17);
@@ -10,7 +13,7 @@ export default function Shop() {
     const [cart, setCart] = useState([]);
 
     const handleAddProduct =(product)=>{
-        console.log('product added',product);
+        //console.log('product added',product);
         const newCart = [...cart, product];
         setCart(newCart);
     }
@@ -28,8 +31,7 @@ export default function Shop() {
                 }
             </div>
             <div className="shopCart">
-                <h1>Cart Items</h1>
-                <h4>Items Ordered:{cart.length}</h4>
+                <Cart cart= {cart} />
             </div>
         </div>
     )
