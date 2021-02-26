@@ -1,0 +1,12 @@
+.product{
+    display: flex;
+    border-bottom: 1px solid gray;
+    margin: 8px 8px;
+}
+.cartButton{
+    width: 150px;
+    height: 25px;
+    background-color: goldenrod;
+    border-radius: 8px;
+    border: 1px solid black;
+}
