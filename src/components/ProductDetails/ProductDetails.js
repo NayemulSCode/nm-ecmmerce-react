@@ -1,12 +1,16 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import fakeData from '../../fakeData';
+import Product from '../Product/Product';
 
-const ProductDetails = (props) => {
+const ProductDetails = () => {
     const {productKey} = useParams();
-    console.log(productKey);
+    const product = fakeData.find(pd => pd.key === productKey);
+    console.log(product);
     return (
         <div>
-            <h3>{productKey} details  </h3>
+            <h3>product details</h3>
+            <Product showAddToCart={false} product={product} />
         </div>
     );
 };
