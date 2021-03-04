@@ -23,6 +23,7 @@ export default function Shop() {
                 {
                     products.map(products => 
                     <Product 
+                    key={products.key}
                     handleAddProduct = {handleAddProduct}
                     product ={products}
                     
