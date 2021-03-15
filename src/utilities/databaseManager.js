@@ -38,8 +38,11 @@ const clearLocalShoppingCart = (cart) => {
   localStorage.removeItem(getDataKey());
 }
 
+const processOrder = (cart) => {
+  localStorage.removeItem(getDataKey());
+}
 
-export { addToDatabaseCart, getDatabaseCart, removeFromDatabaseCart, clearLocalShoppingCart};
+export { addToDatabaseCart, getDatabaseCart, removeFromDatabaseCart, clearLocalShoppingCart,processOrder};
 
 
 // polyfill to support older browser

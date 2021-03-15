@@ -6,8 +6,8 @@ import ReviewItems from '../ReviewItem/ReviewItems';
 const Review = () => {
     const [cart, setCart] =useState([]);
     const handlePlaceOrder =() =>{
-        // setCart([]);
-        // processOrder();
+        setCart([]);
+        processOrder();
         console.log('order placed');
     }
     const removeProduct = productKey =>{
