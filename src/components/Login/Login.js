@@ -2,11 +2,13 @@ import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import firebaseConfig from './firebase.config';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from "../../App";
 firebase.initializeApp(firebaseConfig);
 function Login() {
   const [user, setUser] = useState({isSignedIn:false, name:'',email:'',password:'',photo:'',error:''});
   const [newUser, setNewUser] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const provider = new firebase.auth.GoogleAuthProvider();
   const fbprovider = new firebase.auth.FacebookAuthProvider();
   const ghProvider = new firebase.auth.GithubAuthProvider();
@@ -92,6 +94,7 @@ function Login() {
         newUserInfo.error = '';
         newUserInfo.success = true;
         setUser(newUserInfo);
+        setLoggedInUser(newUserInfo);
         console.log('sing in user', res.user);
       })
       .catch(err =>{

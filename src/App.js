@@ -18,10 +18,11 @@ import { createContext, useState } from 'react';
 export const UserContext = createContext();
 
 function App() {
-  const [loggedUser, setLoggedUser] = useState({});
+  const [loggedInUser, setLoggedInUser] = useState({});
   return (
    
-      <UserContext.Provider value={[loggedUser, setLoggedUser]} >
+      <UserContext.Provider value={[loggedInUser, setLoggedInUser]} >
+      <p>email:{loggedInUser.email}</p>
       <Header />
       <Router>
         <Switch>
