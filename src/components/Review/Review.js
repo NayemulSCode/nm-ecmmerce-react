@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import Cart from '../../Cart';
 import fakeData from '../../fakeData';
 import {getDatabaseCart, removeFromDatabaseCart, processOrder} from '../../utilities/databaseManager'
 import ReviewItems from '../ReviewItem/ReviewItems';
 const Review = () => {
     const [cart, setCart] =useState([]);
+    const history = useHistory();
     const handlePlaceOrder =() =>{
-        setCart([]);
-        processOrder();
-        console.log('order placed');
+        history.push('/shipment');
     }
     const removeProduct = productKey =>{
         console.log("remove product", productKey);

@@ -11,6 +11,8 @@ import Review from './components/Review/Review';
 import Inventory from './components/Inventory/Inventory';
 import Error from './components/Error/Error';
 import ProductDetails from './components/ProductDetails/ProductDetails';
+import Login from './components/Login/Login';
+import Shipment from './components/Shipment/Shipment';
 function App() {
   return (
    
@@ -26,6 +28,12 @@ function App() {
           </Route>
           <Route path="/manage">
             <Inventory></Inventory>
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/shipment">
+           <Shipment />
           </Route>
           <Route exact path="/">
             <Shop></Shop>
