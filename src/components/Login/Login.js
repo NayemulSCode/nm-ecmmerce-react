@@ -4,11 +4,15 @@ import "firebase/auth";
 import firebaseConfig from './firebase.config';
 import { useContext, useState } from 'react';
 import { UserContext } from "../../App";
+import { useHistory, useLocation } from "react-router";
 firebase.initializeApp(firebaseConfig);
 function Login() {
   const [user, setUser] = useState({isSignedIn:false, name:'',email:'',password:'',photo:'',error:''});
   const [newUser, setNewUser] = useState(false);
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const history = useHistory();
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/" } };
   const provider = new firebase.auth.GoogleAuthProvider();
   const fbprovider = new firebase.auth.FacebookAuthProvider();
   const ghProvider = new firebase.auth.GithubAuthProvider();
@@ -95,6 +99,7 @@ function Login() {
         newUserInfo.success = true;
         setUser(newUserInfo);
         setLoggedInUser(newUserInfo);
+        history.replace(from);
         console.log('sing in user', res.user);
       })
       .catch(err =>{
