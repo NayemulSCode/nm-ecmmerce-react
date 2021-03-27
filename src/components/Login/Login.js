@@ -5,7 +5,9 @@ import firebaseConfig from './firebase.config';
 import { useContext, useState } from 'react';
 import { UserContext } from "../../App";
 import { useHistory, useLocation } from "react-router";
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 function Login() {
   const [user, setUser] = useState({isSignedIn:false, name:'',email:'',password:'',photo:'',error:''});
   const [newUser, setNewUser] = useState(false);
@@ -16,7 +18,7 @@ function Login() {
   const provider = new firebase.auth.GoogleAuthProvider();
   const fbprovider = new firebase.auth.FacebookAuthProvider();
   const ghProvider = new firebase.auth.GithubAuthProvider();
-
+  
   const handleSignin = () =>{
     firebase.auth().signInWithPopup(provider)
     .then(res => {
