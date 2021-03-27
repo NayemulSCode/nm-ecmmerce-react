@@ -19,19 +19,16 @@ import {addToDatabaseCart, getDatabaseCart} from '../../utilities/databaseManage
     useEffect(() =>{
         const saveCart = getDatabaseCart();
         const productKeys = Object.keys(saveCart);
-        if(products.length > 0){
-            const previousCart = productKeys.map(  existingKey =>{
-                const product = products.find(pd => pd.key === existingKey);
-                product.quantity = saveCart[existingKey];
-                 
-                console.log(productKeys);
-                console.log(existingKey, saveCart[existingKey]);
-                return product;
-            })
-            setCart(previousCart);
-            console.log(previousCart);
-        }
-    },[products])
+        fetch('http://localhost:5000/productByKey',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productKeys)
+        })
+        .then( res => res.json())
+        .then(data => setCart(data))
+    },[])
     const handleAddProduct =(product)=>{
         //console.log('product added to cart',product);
         const toBeAddedKey = product.key;
