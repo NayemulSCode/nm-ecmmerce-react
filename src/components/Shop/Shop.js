@@ -8,28 +8,26 @@ import {addToDatabaseCart, getDatabaseCart} from '../../utilities/databaseManage
 
 
  const  Shop = ()=> {
-    //console.log(fakeData);
-    const first10 = fakeData.slice(0,17);
-    //console.log(first10);
-    const [ products, setProducts] = useState(first10);
+    const [ products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
 
-    ///update cart total
-
+    useEffect(()=>{
+        fetch('http://localhost:5000/products')
+        .then(res => res.json())
+        .then(data => setProducts(data));
+    },[])
     useEffect(() =>{
         const saveCart = getDatabaseCart();
         const productKeys = Object.keys(saveCart);
-        const previousCart = productKeys.map(  existingKey =>{
-            const product = fakeData.find(pd => pd.key === existingKey);
-            product.quantity = saveCart[existingKey];
-             
-            console.log(productKeys);
-            console.log(existingKey, saveCart[existingKey]);
-            return product;
+        fetch('http://localhost:5000/productByKey',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productKeys)
         })
-        setCart(previousCart);
-        console.log(previousCart);
-
+        .then( res => res.json())
+        .then(data => setCart(data))
     },[])
     const handleAddProduct =(product)=>{
         //console.log('product added to cart',product);
