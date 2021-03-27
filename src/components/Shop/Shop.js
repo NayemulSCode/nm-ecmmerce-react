@@ -8,29 +8,30 @@ import {addToDatabaseCart, getDatabaseCart} from '../../utilities/databaseManage
 
 
  const  Shop = ()=> {
-    //console.log(fakeData);
-    const first10 = fakeData.slice(0,17);
-    //console.log(first10);
-    const [ products, setProducts] = useState(first10);
+    const [ products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
 
-    ///update cart total
-
+    useEffect(()=>{
+        fetch('http://localhost:5000/products')
+        .then(res => res.json())
+        .then(data => setProducts(data));
+    },[])
     useEffect(() =>{
         const saveCart = getDatabaseCart();
         const productKeys = Object.keys(saveCart);
-        const previousCart = productKeys.map(  existingKey =>{
-            const product = fakeData.find(pd => pd.key === existingKey);
-            product.quantity = saveCart[existingKey];
-             
-            console.log(productKeys);
-            console.log(existingKey, saveCart[existingKey]);
-            return product;
-        })
-        setCart(previousCart);
-        console.log(previousCart);
-
-    },[])
+        if(products.length > 0){
+            const previousCart = productKeys.map(  existingKey =>{
+                const product = products.find(pd => pd.key === existingKey);
+                product.quantity = saveCart[existingKey];
+                 
+                console.log(productKeys);
+                console.log(existingKey, saveCart[existingKey]);
+                return product;
+            })
+            setCart(previousCart);
+            console.log(previousCart);
+        }
+    },[products])
     const handleAddProduct =(product)=>{
         //console.log('product added to cart',product);
         const toBeAddedKey = product.key;
