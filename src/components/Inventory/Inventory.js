@@ -14,8 +14,13 @@ const Inventory = () => {
     }
     return (
         <div>
-            <h3>this is inventory components</h3>
-            <button onClick={handleAddProduct}>Add Product</button>
+            <h3>Create Product</h3>
+            <form action="">
+                <p><span>Name</span><input type="text"/></p>
+                <p><span>Price</span><input type="text"/></p>
+                <p><span>Upload Picture</span><input type="file"/></p>
+                <button onClick={handleAddProduct}>Add Product</button>
+            </form>
         </div>
     );
 };
