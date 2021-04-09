@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../App';
 import { getDatabaseCart, processOrder } from '../../utilities/databaseManager';
@@ -8,10 +8,19 @@ import './Shipment.css'
 const Shipment = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const { register, handleSubmit, watch, errors } = useForm();
-    
+    const [shippingData, setShippingData] = useState(null);
   const onSubmit = data => {
+    setShippingData(data);
+  }
+  const handlePaymentOrder = paymentId =>{
     const saveCart = getDatabaseCart();
-    const orderDetails = {...loggedInUser, products: saveCart, shipment: data, orderTime: new Date()};
+    const orderDetails = {
+      ...loggedInUser, 
+      products: saveCart, 
+      shipment: shippingData, 
+      paymentId,
+      orderTime: new Date()
+    };
     fetch('http://localhost:5000/addOrder',{
       method: 'POST',
       headers: {
@@ -26,13 +35,12 @@ const Shipment = () => {
         alert('order added successfully');
       }
     })
-    console.log(data);
   }
   console.log(watch("example")); // watch input value by passing the name of it
 
   return (
     <div >
-      <div>
+      <div style={{display: shippingData ? 'none': 'block'}}>
         <form className="ship-form" onSubmit={handleSubmit(onSubmit)}>
           <input name="name" defaultValue={loggedInUser.name} ref={register({ required: true })} placeholder="Your Name"/>
           {errors.name && <span className="error">Name is required</span>}
@@ -48,9 +56,9 @@ const Shipment = () => {
           <input type="submit" />
         </form>
       </div>
-      <div>
+      <div style={{display: shippingData ? 'block': 'none'}}>
         <h2>Payemnt option</h2>
-        <Payment />
+        <Payment handlePayment = {handlePaymentOrder} />
       </div>
     </div>
   );
