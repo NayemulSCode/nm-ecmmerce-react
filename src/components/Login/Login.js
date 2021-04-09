@@ -29,6 +29,8 @@ function Login() {
         email : email,
         photo: photoURL
       }
+      
+      setUserToken();
       setUser(signedInUser);
       console.log(displayName, email, phone, photoURL);
     })
@@ -37,6 +39,16 @@ function Login() {
       console.log(err.message)
     })
   }
+  //user loggedin after page refresh by token
+  const setUserToken = () =>{
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+      // Send token to your backend via HTTPS
+      sessionStorage.getItem('token', idToken)
+    }).catch(function(error) {
+      // Handle error
+    });
+  }
+
   const handleSignOut =()=>{
     firebase.auth().signOut()
     .then(res =>{
